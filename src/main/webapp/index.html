@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript">
+            var ws = new WebSocket("ws://" + document.location.host + document.location.pathname + "endpoint");
+            ws.onopen = function ()
+            {
+                alert("Web Socket is connected!!");
+            };
+            ws.onmessage = function (evt)
+            {
+                var msg = evt.data;
+                alert("Message received:" + msg);
+            };
+            ws.onclose = function ()
+            {
+                alert("Connection is closed...");
+            };
+
+
+            function sendMessage() {
+                ws.send("Message to server from client");
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Hello Worldwide!</h1>
+        <a href="javascript:sendMessage()">Send message</a>
+    </body>
+</html>
