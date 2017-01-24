@@ -3,30 +3,49 @@
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>       
         <script type="text/javascript">
             var ws = new WebSocket("ws://" + document.location.host + document.location.pathname + "endpoint");
-            ws.onopen = function ()
-            {
-                alert("Web Socket is connected!!");
+            ws.onopen = function (event) {
+                onOpen(event);
             };
+
             ws.onmessage = function (evt)
             {
                 var msg = evt.data;
-                alert("Message received:" + msg);
+                $('#topic').val(msg);
+                //alert("Message received:" + msg);
             };
             ws.onclose = function ()
             {
                 alert("Connection is closed...");
             };
 
+            function onOpen(event) {
+                alert("Web Socket is connected!!");
+            }
 
             function sendMessage() {
                 ws.send("Message to server from client");
+                if (typeof(Storage) !== "undefined") {
+                    console.log('storage ok')
+                   // localStorage.setItem("lastname", "Smith");
+                    console.log('name',localStorage.getItem("lastname"));
+                    
+                } else{
+                    console.log('storage no')
+                }
             }
         </script>
     </head>
     <body>
         <h1>Hello Worldwide!</h1>
         <a href="javascript:sendMessage()">Send message</a>
+        <br/>
+        <div>               
+            <input type='text' id='topic' disabled />
+        </div>
+
+
     </body>
 </html>
