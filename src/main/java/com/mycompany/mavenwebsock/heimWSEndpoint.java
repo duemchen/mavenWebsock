@@ -6,6 +6,8 @@
 package com.mycompany.mavenwebsock;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.enterprise.concurrent.ManagedExecutorService;
@@ -17,7 +19,39 @@ import javax.websocket.server.ServerEndpoint;
 
 /**
  *
+ * webapp Wismar
+ * 
  * @author duemchen
+ * 
+ * Einloggen
+ * Hash in localstorage
+ * Neueinloggen dann automatisch 
+ * gewolltes logout löscht hashwert
+ * 
+ * Hole meine letzte Buchungen: 
+ * Status anzeigen
+ * erlaubte Knöpfe steuern
+ * 
+ * Drücke Knöpfe
+ * Buchungen direkt absetzen
+ * Hole meine letzte Buchungen: 
+ * Status aktualisieren
+ * erlaubte Knöpfe steuern
+ * 
+ * Abfrage aller Aufträge
+ * Filterung nach Position
+ * 
+ * Auftragsanfang
+ * Liste anzeigen und Auftrag auswählen 
+ * Auftrag anzeigen und bestätigen 
+ *  
+ * OfflineFunktionen
+ * 
+ * Iphone test
+ * WinPhone test
+ * 
+ * 
+ * 
  */
 @ServerEndpoint("/endpoint")
 @Stateless
@@ -34,12 +68,13 @@ public class heimWSEndpoint {
             @Override
             public void run() {
                 try {
-                    for (int i = 0; i < 50; i++) {
-                        Thread.sleep(100);
+                     Thread.sleep(1500);
+                    for (int i = 0; i < 30; i++) {
+                        Thread.sleep(30);
                         s.getBasicRemote().sendText(i + ". Message from server");
-                        System.out.println("i=" + i);
+                        System.err.println("i=" + i);
                     }
-                    s.getBasicRemote().sendText("byebye.");
+                    s.getBasicRemote().sendText("ready.");
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
@@ -56,6 +91,11 @@ public class heimWSEndpoint {
     @OnMessage
     public String onMessage(String message, Session session) {
         System.out.println("onMessage " + message);
+        try {
+            session.getBasicRemote().sendText(message);
+        } catch (IOException ex) {
+            Logger.getLogger(heimWSEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 

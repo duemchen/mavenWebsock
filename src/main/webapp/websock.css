@@ -1,0 +1,20 @@
+<!--das hat alles nix genützt -->
+
+body {
+    -webkit-touch-callout: none !important;
+}
+a { -webkit-user-select: none !important; 
+}
+
+a[data-role=button] {
+    -webkit-user-select: none!important;
+}
+
+.ui-mobile {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
